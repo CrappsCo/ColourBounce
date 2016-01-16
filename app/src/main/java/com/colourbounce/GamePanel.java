@@ -90,14 +90,13 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
 
     // ********** Create Highscore **********
 
-    public int getHighscore(){
+    public int getHighscore() {
         SharedPreferences prefs = context.getSharedPreferences("myPrefsKey", Context.MODE_PRIVATE);
         return prefs.getInt("key", 0);   //0 is the default value
     }
 
-    public void CheckScore()
-    {
-        if(score > Highscore) {
+    public void CheckScore() {
+        if (score > Highscore) {
             SharedPreferences prefs = context.getSharedPreferences("myPrefsKey", Context.MODE_PRIVATE);
             SharedPreferences.Editor editor = prefs.edit();
             editor.putInt("key", score);
@@ -132,7 +131,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
         // board setup
         deathScreen = new DeathScreen(context);
         bg = new Background(BitmapFactory.decodeResource(getResources(), R.drawable.bg1));
-        player = new Player(BitmapFactory.decodeResource(context.getResources(), R.drawable.player), 0,0);
+        player = new Player(BitmapFactory.decodeResource(context.getResources(), R.drawable.player), 0, 0);
         player = new Player(BitmapFactory.decodeResource(context.getResources(), R.drawable.player), GamePanel.WIDTH / 2 - player.width / 2, GamePanel.HEIGHT - player.height);
 
         platforms = new ArrayList<>();
@@ -215,65 +214,57 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
 
     // ********** GENERATE FUNCTIONS **********
 
-    public Platform generateRandomPlatform(){
+    public Platform generateRandomPlatform() {
         int w, h, xp, yp, xspeed, yspeed, color, size;
 
-        if(score <= 750){
+        if (score <= 750) {
             color = (int) (Math.random() * 4);
             w = 350;
             h = 30;
-            size=3;
+            size = 3;
             xp = (int) (Math.random() * 730);
-            while(Math.abs(xp - PreviousX) < 200){  // So that platforms are not in line with each other
+            while (Math.abs(xp - PreviousX) < 200) {  // So that platforms are not in line with each other
                 xp = (int) (Math.random() * 730);
             }
             yp = -50;
             xspeed = 0;
             yspeed = 0;
-        }
-
-        else if(750 < score && score <= 1500) {
+        } else if (750 < score && score <= 1500) {
             color = (int) (Math.random() * 4);
             w = 300;
             h = 30;
-            size=2;
+            size = 2;
             xp = (int) (Math.random() * 730);
-            while(Math.abs(xp - PreviousX) < 150){
+            while (Math.abs(xp - PreviousX) < 150) {
                 xp = (int) (Math.random() * 730);
             }
             yp = -50;
-            if(xp%2 ==0){
+            if (xp % 2 == 0) {
                 xspeed = 0;
-            }
-            else {
+            } else {
                 xspeed = 2;
             }
             yspeed = 0;
-        }
-
-        else if(1500 < score && score <= 2250) {
+        } else if (1500 < score && score <= 2250) {
             maxEnemies = 1;
             color = (int) (Math.random() * 4);
             w = 250;
             h = 30;
-            size=1;
+            size = 1;
             xp = (int) (Math.random() * 730);
             yp = (int) (Math.random() * -25);
-            if(xp%3 ==0){
+            if (xp % 3 == 0) {
                 xspeed = 0;
-            }
-            else {
+            } else {
                 xspeed = (int) (Math.random() * 4) + 2;
             }
             yspeed = 0;
-        }
-
-        else{
+        } else {
             maxEnemies = 2;
             color = (int) (Math.random() * 4);
             w = 250;
             h = 30;
-            size=1;
+            size = 1;
             xp = (int) (Math.random() * 730);
             yp = (int) (Math.random() * -25);
             xspeed = (int) (Math.random() * 8);
@@ -285,13 +276,13 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
         return createPlatform(context, w, h, xp, yp, xspeed, yspeed, color, size);
     }
 
-    public Enemy generateRandomEnemy(){
+    public Enemy generateRandomEnemy() {
         int xspeed = (int) (Math.random() * 3 + 3);
         int yspeed = (int) (Math.random() * 3 + 3);
         int xp = (int) (Math.random() * 500);
         int yp = (int) (Math.random() * -1000);
-        if(xspeed%2 == 0)
-            xspeed*= -1;
+        if (xspeed % 2 == 0)
+            xspeed *= -1;
         return createEnemy(context, 50, 50, xp, yp, xspeed, yspeed, 0);
     }
 
@@ -299,27 +290,39 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
 
     public Platform createPlatform(Context context, int width, int height, int x, int y, int xspeed, int yspeed, int color, int size) {
         if (color == 1) {
-            if(size==1) platformBase = BitmapFactory.decodeResource(context.getResources(), R.drawable.smallplatform1);
-            if(size==2) platformBase = BitmapFactory.decodeResource(context.getResources(), R.drawable.mediumplatform1);
-            if(size==3) platformBase = BitmapFactory.decodeResource(context.getResources(), R.drawable.largeplatform1);
+            if (size == 1)
+                platformBase = BitmapFactory.decodeResource(context.getResources(), R.drawable.smallplatform1);
+            if (size == 2)
+                platformBase = BitmapFactory.decodeResource(context.getResources(), R.drawable.mediumplatform1);
+            if (size == 3)
+                platformBase = BitmapFactory.decodeResource(context.getResources(), R.drawable.largeplatform1);
         } else if (color == 2) {
-            if(size==1) platformBase = BitmapFactory.decodeResource(context.getResources(), R.drawable.smallplatform2);
-            if(size==2) platformBase = BitmapFactory.decodeResource(context.getResources(), R.drawable.mediumplatform2);
-            if(size==3) platformBase = BitmapFactory.decodeResource(context.getResources(), R.drawable.largeplatform2);
+            if (size == 1)
+                platformBase = BitmapFactory.decodeResource(context.getResources(), R.drawable.smallplatform2);
+            if (size == 2)
+                platformBase = BitmapFactory.decodeResource(context.getResources(), R.drawable.mediumplatform2);
+            if (size == 3)
+                platformBase = BitmapFactory.decodeResource(context.getResources(), R.drawable.largeplatform2);
         } else if (color == 3) {
-            if(size==1) platformBase = BitmapFactory.decodeResource(context.getResources(), R.drawable.smallplatform3);
-            if(size==2) platformBase = BitmapFactory.decodeResource(context.getResources(), R.drawable.mediumplatform3);
-            if(size==3) platformBase = BitmapFactory.decodeResource(context.getResources(), R.drawable.largeplatform3);
+            if (size == 1)
+                platformBase = BitmapFactory.decodeResource(context.getResources(), R.drawable.smallplatform3);
+            if (size == 2)
+                platformBase = BitmapFactory.decodeResource(context.getResources(), R.drawable.mediumplatform3);
+            if (size == 3)
+                platformBase = BitmapFactory.decodeResource(context.getResources(), R.drawable.largeplatform3);
         } else {
-            if(size==1) platformBase = BitmapFactory.decodeResource(context.getResources(), R.drawable.smallplatform0);
-            if(size==2) platformBase = BitmapFactory.decodeResource(context.getResources(), R.drawable.mediumplatform0);
-            if(size==3) platformBase = BitmapFactory.decodeResource(context.getResources(), R.drawable.largeplatform0);
+            if (size == 1)
+                platformBase = BitmapFactory.decodeResource(context.getResources(), R.drawable.smallplatform0);
+            if (size == 2)
+                platformBase = BitmapFactory.decodeResource(context.getResources(), R.drawable.mediumplatform0);
+            if (size == 3)
+                platformBase = BitmapFactory.decodeResource(context.getResources(), R.drawable.largeplatform0);
         }
         return new Platform(platformBase, width, height, x, y, xspeed, yspeed, color);
     }
 
     public Enemy createEnemy(Context context, int width, int height, int x, int y, int xSpeed, int ySpeed, int color) {
-        enemyBase = BitmapFactory.decodeResource(context.getResources(),R.drawable.enemy);
+        enemyBase = BitmapFactory.decodeResource(context.getResources(), R.drawable.enemy);
         return new Enemy(enemyBase, width, height, x, y, xSpeed, ySpeed, color);
     }
 
@@ -333,25 +336,25 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
                 angle += 360;
             if (object2.angle <= angle && angle <= 180 - object2.angle) { // Top Collision
                 object1.y = object2.y - object1.height - 1;
-                if(object1.isEnemy)
+                if (object1.isEnemy)
                     object1.dy *= -1;
                 else
                     object1.playerSpeed = object1.gravity;
             } else if (180 - object2.angle < angle && angle < 180 + object2.angle) { // Right Collision
                 object1.x = object2.x + object2.width + 1;
-                if(object1.isEnemy)
+                if (object1.isEnemy)
                     object1.dx *= -1;
                 else
                     object1.dx = 0;
             } else if (180 + object2.angle <= angle && angle <= 360 - object2.angle) { // Bot Collision
                 object1.y = object2.y + object2.height + 1;
-                if(object1.isEnemy)
+                if (object1.isEnemy)
                     object1.dy *= -1;
                 else
                     object1.playerSpeed = 5;
             } else { // Left Collision
                 object1.x = object2.x - object1.width - 1;
-                if(object1.isEnemy)
+                if (object1.isEnemy)
                     object1.dx *= -1;
                 else
                     object1.dx = 0;
@@ -376,7 +379,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
             player.setGravity(-37);
 
             //Enemy update
-            if(enemies.size() < maxEnemies){
+            if (enemies.size() < maxEnemies) {
                 enemies.add(generateRandomEnemy());
             }
             for (int k = 0; k < enemies.size(); k++) {
@@ -389,12 +392,12 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
                     }
                 }
 
-                if(Collision(player, enemy)){
+                if (Collision(player, enemy)) {
                     player.setPlaying(false);
                     CheckScore();
                     gameOver = true;
                 }
-                if(enemy.y > HEIGHT*2 || enemy.y < - HEIGHT) {
+                if (enemy.y > HEIGHT * 2 || enemy.y < -HEIGHT) {
                     enemies.remove(enemy);
                 }
             }
@@ -405,16 +408,16 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
 
                 platform.update(scroll, scrollSpeed);
                 if (platform.currentColor != currentColor) {
-                    if(Collision(player, platform)&&player.y<platform.y){
+                    if (Collision(player, platform) && player.y < platform.y) {
                         jump.play(jumpsound, 1.0f, 1.0f, 0, 0, 1.5f);
                     }
                 }
 
                 // If platform moves off bottom of screen, replace it
-                if(platform.y > HEIGHT) {
+                if (platform.y > HEIGHT) {
                     platforms.remove(platform);
                 }
-                if(platforms.size() < maxPlatforms){
+                if (platforms.size() < maxPlatforms) {
                     platforms.add(generateRandomPlatform());
                 }
             }
@@ -454,7 +457,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
             for (int k = 0; k < enemies.size(); k++) {
                 Enemy enemy = enemies.get(k);
 
-                if(enemy.currentColor != currentColor)
+                if (enemy.currentColor != currentColor)
                     enemy.draw(canvas);
             }
 
@@ -462,7 +465,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
             for (int k = 0; k < platforms.size(); k++) {
                 Platform platform = platforms.get(k);
 
-                if(platform.currentColor != currentColor)
+                if (platform.currentColor != currentColor)
                     platform.draw(canvas);
             }
 
